@@ -1202,6 +1202,15 @@ func (dmp *DiffMatchPatch) DiffPrettyText(diffs []Diff) string {
 	return buff.String()
 }
 
+// DiffText converts a []Diff into a uncolored plain text report.
+func (dmp *DiffMatchPatch) DiffPlainText(diffs []Diff) string {
+	var buff bytes.Buffer
+	for _, diff := range diffs {
+		_, _ = buff.WriteString(diff.Text)
+	}
+	return buff.String()
+}
+
 // DiffText1 computes and returns the source text (all equalities and deletions).
 func (dmp *DiffMatchPatch) DiffText1(diffs []Diff) string {
 	//StringBuilder text = new StringBuilder()

@@ -997,6 +997,31 @@ func TestDiffPrettyText(t *testing.T) {
 	}
 }
 
+func TestDiffPlainText(t *testing.T) {
+	type TestCase struct {
+		Diffs []Diff
+
+		Expected string
+	}
+
+	dmp := New()
+
+	for i, tc := range []TestCase{
+		{
+			Diffs: []Diff{
+				{DiffEqual, "a\n"},
+				{DiffDelete, "<B>b</B>"},
+				{DiffInsert, "c&d"},
+			},
+
+			Expected: "a\n<B>b</B>c&d",
+		},
+	} {
+		actual := dmp.DiffPlainText(tc.Diffs)
+		assert.Equal(t, tc.Expected, actual, fmt.Sprintf("Test case #%d, %#v", i, tc))
+	}
+}
+
 func TestDiffText(t *testing.T) {
 	type TestCase struct {
 		Diffs []Diff
